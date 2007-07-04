@@ -1,0 +1,13 @@
+Begin3
+Title:          CuteMouse
+Version:        2.1b
+Entered-date:   2007-05-14
+Description:    Tiny mouse driver for serial and PS/2 mice
+Keywords:       mouse, mice, driver
+Author:         nagyd -at- users.sourceforge.net
+Maintained-by:  nagyd -at- users.sourceforge.net
+Primary-site:   http://cutemouse.sourceforge.net
+Alternate-site: http://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/dos/mouse/
+Platforms:      DOS (TASM)
+Copying-policy: GNU GPL
+End
