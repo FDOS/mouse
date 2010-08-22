@@ -39,7 +39,7 @@ extFCB1		db  7 dup(?)	; 55: can be used to make extended FCB
 FCB1		db 16 dup(?)	; 5C: unopened FCB for 1st cmd argument
 FCB2		db 16 dup(?)	; 6C: unopened FCB for 2nd cmd argument
 		db  4 dup(?)
-defaultDTA	label
+defaultDTA	label byte
 cmdline_len	db ?		; 80
 cmdline		db 127 dup(?)
 PSP		ends		; sizeof(PSP) == 256

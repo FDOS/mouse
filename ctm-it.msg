@@ -1,9 +1,11 @@
 ; This file is a part of CuteMouse source
 ; Here are messages in Italian
 ; Translated by Massimo Giussani <massimo-at-suespammers.org>
+; updated 25/8/08 from Roberto Perotti Iw2evk
 ; Please note that suespammers domain is located in California,
 ; so DON'T spam that account or you'll be sued!!
 
+E_needvga       db 'No VGA? Use older CTMOUSE if you need EGA RIL support',nl,eos
 E_error		db nl,'Errore: Opzione invalida'
 E_option	db eos
 E_argument	db ' (argomento errato)',eos
@@ -32,13 +34,16 @@ S_wheel		db ' (con rotellina)'
 S_CRLF		db nl,eos
 
 Copyright	db nl,'CuteMouse v',CTMRELEASE,' [FreeDOS]',nl,eos
-Syntax		label
+Syntax		label byte
     db 0,'Opzioni:',nl
     db "  /P	   - forza modalita' PS/2",nl
     db "  /S[c[i]] - forza modalita' seriale sulla porta COM c (1-4) ed IRQ i (1-7)",nl
 ;;+ db "  /S$a[,i] - forza modalita' seriale all'indirizzo I/O a (in esadecimale)",nl
 ;;+ db '	     con IRQ i (1-7)',nl
-    db "  /Y	   - impedisce modalita' Mouse Systems",nl
+    db "  /O       - abilita PS2 e il BIOS USB per riconoscere la ruota",nl
+; 2008: made /Y (ignora MSys) come default e introducede /M (abilita MSys)
+;   db '  /Y	   - non prova il modo Mouse Systems per  non-PnP devices',nl,nl
+    db '  /M       - prova il "vecchio" Mouse Systems / Genius per non-PnP mouse',nl,nl
     db '  /V	   - inverte la ricerca: cerca il mouse PS/2 dopo quello seriale',nl
     db "  /3	   - forza l'uso dei 3 pulsanti (solo per mouse Microsoft e PS/2)",nl
     db "  /R[h[v]] - risoluzione orizzontale/verticale (h,v=0-9; senza l'opzione R, o",nl

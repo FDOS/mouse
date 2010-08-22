@@ -2,6 +2,7 @@
 ; Here are messages in Spanish
 ; Translated by Diego Rodr¡guez <dieymir@teleline.es>
 
+E_needvga       db 'No VGA? Use older CTMOUSE if you need EGA RIL support',nl,eos
 E_error		db nl,'Error: ',eos
 E_option	db 'Opci¢n desconocida',eos
 E_argument	db 'Par metro de opci¢n incorrecto',eos
@@ -30,13 +31,16 @@ S_wheel		db ' (detectada rueda)'
 S_CRLF		db nl,eos
 
 Copyright	db nl,'CuteMouse v',CTMRELEASE,' [FreeDOS]',nl,eos
-Syntax		label
+Syntax		label byte
     db 0,'Opciones:',nl
     db '  /P	   - fuerza uso de rat¢n PS/2',nl
     db '  /S[c[i]] - fuerza uso de rat¢n serie en puerto COM c (1-4) con IRQ i (1-7)',nl
 ;;+ db '  /S$a[,i] - fuerza uso de rat¢n serie en la direcci¢n de E/S a (en',nl
 ;;+ db '	     hexadecimal) con IRQ i (1-7)',nl
-    db '  /Y	   - no instala el controlador usando el protocolo Mouse Systems',nl
+    db '  /O       - enable PS2 and BIOS USB wheel detection (might hang)',nl
+; 2008: made /Y (ignore MSys) the default and introduced /M (enable MSys)
+;   db '  /Y	   - do not try Mouse Systems mode for non-PnP devices',nl,nl
+    db '  /M       - try *old* Mouse Systems / Genius for non-PnP mice',nl,nl
     db '  /V	   - invierte orden de b£squeda: busca el rat¢n antes puerto serie',nl
     db '  /3	   - fuerza modo 3-botones (s¢lo para ratones Microsoft y PS/2)',nl
     db '  /R[h[v]] - resoluci¢n horizontal/vertical (h,v=0-9; especificar R sin',nl

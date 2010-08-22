@@ -1,8 +1,13 @@
 # Macros for building, deleting ########################################
 
-AS=tasm -m @asmlib.cfg
+# AS=tasm -m @asmlib.cfg
+# the following would require that you run SET ASMLIB=... first in a .bat:
+# AS=jwasmd -mt @asmlib ... so we just hardcode the asmlib/ for includes
+AS=jwasmd -mt 
 LINKEXE=tlink /x
-LINKCOM=tlink /x /t
+# using tlink /x /t would create COM but fails on jwasm made OBJ:
+# it says that there would be data defined below initial CS:IP...
+# *** LINKCOM=tlink /x /t
 
 RM=del
 
@@ -11,8 +16,6 @@ RM=del
 
 .asm.obj:
 	$(AS) $*
-.obj.com:
-	$(LINKCOM) $*
 .obj.exe:
 	$(LINKEXE) $*
 
@@ -22,14 +25,15 @@ RM=del
 all: ctmouse.exe
 
 ctmouse.exe: ctmouse.obj com2exe.exe
-	$(LINKCOM) $*,$*.exe
-	com2exe -s512 $*.exe $*.exe
+	$(LINKEXE) $*,$*.exe
+	exe2bin $*.exe $*.bin
+	com2exe -s512 $*.bin $*.exe
 
 ctmouse.obj: ctmouse.asm ctmouse.msg asmlib\*.* asmlib\bios\*.* \
 		asmlib\convert\*.* asmlib\dos\*.* asmlib\hard\*.*
 
-ctmouse.msg: ctm-en.msg
-	copy ctm-en.msg ctmouse.msg
+# ctmouse.msg: ctm-en.msg
+#	copy ctm-en.msg ctmouse.msg
 
 
 # Clean up #############################################################
@@ -37,3 +41,6 @@ ctmouse.msg: ctm-en.msg
 clean:
 	-$(RM) ctmouse.msg
 	-$(RM) *.obj
+	-$(RM) ctmouse.bin
+# -$(RM) ctmouse.com
+

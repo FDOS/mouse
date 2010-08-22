@@ -2,6 +2,7 @@
 ; Here are messages in Latvian (for codepage 775)
 ; Translated by Kristaps Kaupe, Latvia <neons@digital.lv>
 
+E_needvga       db 'No VGA? Use older CTMOUSE if you need EGA RIL support',nl,eos
 E_error		db nl,'Kë×da: ',eos
 E_option	db 'Nepareiza opcija',eos
 E_argument	db 'Invalid option argument',eos
@@ -30,13 +31,16 @@ S_wheel		db ' (pele ar ritenŒti)'
 S_CRLF		db nl,eos
 
 Copyright	db nl,'CuteMouse v',CTMRELEASE,' [FreeDOS]',nl,eos
-Syntax		label
+Syntax		label byte
     db 0,'Opcijas:',nl
     db '  /P	   - PS/2 peles reØŒms',nl
     db '  /S[c[i]] - seriƒlƒs peles reØŒms uz COM porta c (1-4) ar IRQ lŒniju i (1-7)',nl
 ;;+ db '  /S$a[,i] - seriƒlƒs peles reØŒms I/O adres‰ a (heksadecimƒlais numurs)',nl
 ;;+ db '	     ar IRQ lŒniju i (1-7)',nl
-    db '  /Y	   - Mouse Systems reØŒms',nl
+    db '  /O       - enable PS2 and BIOS USB wheel detection (might hang)',nl
+; 2008: made /Y (ignore MSys) the default and introduced /M (enable MSys)
+;   db '  /Y	   - do not try Mouse Systems mode for non-PnP devices',nl,nl
+    db '  /M       - try *old* Mouse Systems / Genius for non-PnP mice',nl,nl
     db '  /V	   - apgrieztƒ mekl‰Õana: mekl‰t PS/2 p‰c seriƒlƒs peles',nl
     db '  /3	   - 3 pogu reØŒms (tikai Microsoft un PS/2 pel‰m)',nl
     db '  /R[h[v]] - horizontƒlƒ/vertikƒlƒ izÕéirtsp‰ja (h,v=0-9; ja nav opcijas R,',nl

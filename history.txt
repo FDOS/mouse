@@ -1,6 +1,52 @@
 History
 -------
 
+2.1beta4 by Eric Auer 7/2008
+
+- intermediate release, prints PS/2 debugging output during
+  mouse init and when mouse is activated / stopped later
+- Dell Inspiron 1501 touchpad has no int 15.c204 ident in
+  BIOS, so we use PS/2 even without ident (as ctmouse 1.9)
+- option /O changed from disable to enable wheel detection
+  (only few DOS apps use wheels, and wheel is less compatible)
+- option /M (disable old MouseSystems / Genius) is now the
+  default, so there is a new option /Y to enable MouseSystems.
+- lots of changes in the source code to let it compile with
+  the MASM-ized JWASM of Japheth.de (based on OpenWatcom WASM)
+  instead of the commercial TASM. Disabled many macros.
+- this version comes with TASM and JWASMD binaries so you can
+  compare them: ctmouse binaries are byte identical with the
+  exception of protocol.com where I had to fix a bug :-p.
+
+
+2.1beta3 by Eric Auer 6/2007
+
+- new mousetst binary with sources written in NASM Assembly
+  language. Supports wheel testing, so removed wheeltst.
+  The old BC3.1 mousetst was very un-portable to another C.
+  Updated makefile mousetst section. New mousetst is 1kB :-).
+- directory structure changed to something more elaborate, with
+  bin/, doc/ctmouse/ and source/ctmouse/ with subdirectories.
+  This also allows easy installation in FreeDOS, just unzip.
+- dropped packed / unpacked distinction, but feel free to aPack
+  binaries yourself (upx somehow refuses to compress ctmouse?).
+  
+
+2.1beta2 by Eric Auer
+
+- new /O option to suppress wheel detection: Might improve PnP for
+  serial mice, but main use is for PS/2. USB BIOS support usually
+  does not support the "enable wheel protocol" handshake, and if
+  you hotplug a mouse (NOT recommended for PS/2), it will boot in
+  non-wheel mode. The TSR cannot detect and fix that mode change.
+- made E_needvga message translateable. The message tells that this
+  CuteMouse version does not support non-VGA plain EGA hardware.
+- improved the English help message :-)
+- TODO: also update the other message files for other languages!
+- TODO: Find sources of com2exe and include them...
+- TODO: compile and include translated binaries
+- other TODO / BUGS as in 2.1beta
+
 2.1beta	by Eric Auer <eric*coli.uni-sb.de>
 
 - removed RIL interface: non-RIL apps caused graphics corruption
@@ -18,13 +64,12 @@ History
 - enabledriver_20 explicitly sets int10 handler to CS:...
 - show error message if pre-VGA, old version only tuned videoregs if EGA
 
-- PLANNED: command line options for resolution / rate, VESA cursor,
-  disabledrv_1F should set resolution / rate, as should enable / reset.
-- POSSIBLE?: support USB wheel mice - BIOS PS2 interface wheel handshake
+- TODO?: command line options for resolution / rate, VESA cursor,
+- TODO?: disabledrv_1F/enable/reset could / should set resolution / rate
+- TODO??: support USB wheel mice - BIOS PS2 interface wheel handshake
   fails if mouse is not at PS2. Mouse on USB works, wheel does not.
   8042 handshake had the same problem, 8042 is virtual / BIOS if USB.
-- TODO?: make pre-VGA / only EGA message translateable (.msg, i18n)
-- BUG?: mode 10h cursor has rectangular hole around it, only in dosemu
+- BUG?: mode 10h cursor has rectangular hole around it, ONLY in dosemu
 
 
 2.0	by Nagy Daniel <nagyd@users.sourceforge.net>

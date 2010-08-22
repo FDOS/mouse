@@ -52,7 +52,7 @@ UMB_LINK	equ 1
 ; Modf:	AH
 ; Call:	INT 21/35
 ;
-DOSGetIntr	macro	intrno:vararg
+DOSGetIntr	macro	intrno ; :vararg
 		MOVREG2	ax,ah,al,35h,<intrno>
 		int	21h		; get INT in ES:BX
 		assume	es:nothing
@@ -71,7 +71,7 @@ endm
 ; Modf:	AH
 ; Call:	INT 21/25
 ;
-DOSSetIntr	macro	intrno,hseg,hsegname,hoff:vararg
+DOSSetIntr	macro	intrno,hseg,hsegname,hoff ; :vararg
 		MOVOFFax_ dx,dh,dl,<hoff>,25h,<intrno>
 		MOVSEG_	ds,<hseg>,,<hsegname>
 		int	21h		; set INT in DS:DX
@@ -93,7 +93,7 @@ endm
 ; Modf:	none
 ; Call:	INT 21/48
 ;
-DOSAlloc	macro	size,message,errlabel:vararg
+DOSAlloc	macro	size,message,errlabel ; :vararg
 		MOVREG_	bx,<size>
 		mov	ah,48h
 		int	21h		; allocate memory
@@ -121,7 +121,7 @@ endm
 ; Modf:	none
 ; Call:	INT 21/4A
 ;
-DOSRealloc	macro	memseg,memsegname,size,message,errlabel:vararg
+DOSRealloc	macro	memseg,memsegname,size,message,errlabel ; :vararg
 		MOVREG_	bx,<size>
 		MOVSEG_	es,<memseg>,,<memsegname>
 		mov	ah,4Ah
@@ -147,7 +147,7 @@ endm
 ; Modf:	none
 ; Call:	INT 21/49
 ;
-DOSFreeMem	macro	memseg,memsegname,message,errlabel:vararg
+DOSFreeMem	macro	memseg,memsegname,message,errlabel ; :vararg
 		MOVSEG_	es,<memseg>,,<memsegname>
 		mov	ah,49h
 		int	21h		; free memory
@@ -186,7 +186,7 @@ endm
 ; Modf:	AX
 ; Call:	INT 21/5801
 ;
-DOSSetAlloc	macro	strategy:vararg
+DOSSetAlloc	macro	strategy ; :vararg
 		MOVREG_	bx,<strategy>
 		mov	ax,5801h
 		int	21h		; set DOS memory allocation strategy
@@ -222,7 +222,7 @@ endm
 ; Modf:	AX
 ; Call:	INT 21/5803
 ;
-DOSSetUMBlink	macro	state:vararg
+DOSSetUMBlink	macro	state ; :vararg
 		MOVREG_	bx,<state>
 		mov	ax,5803h
 		int	21h		; set UMB link state

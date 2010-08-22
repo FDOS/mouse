@@ -21,7 +21,7 @@
 ;	  MOVREG2, MOVREGax_, MOVOFFax_,
 ;	  TESTREG_
 
-MOVREG_		macro	reg,val:vararg
+MOVREG_		macro	reg,val ; :vararg
 	ifnb <reg>
 	ifnb <val>
 	ifdifi <val>,<reg>
@@ -41,7 +41,7 @@ MOVREG_		macro	reg,val:vararg
 	endif
 endm
 
-MOVOFF_		macro	reg,offs:vararg
+MOVOFF_		macro	reg,offs ; :vararg
 	ifnb <reg>
 	ifnb <offs>
 	ifdifi <offs>,<reg>
@@ -51,7 +51,7 @@ MOVOFF_		macro	reg,offs:vararg
 	endif
 endm
 
-MOVSEG_		macro	segreg,val,temp,segname:vararg
+MOVSEG_		macro	segreg,val,temp,segname ; :vararg
 	ifb <segreg>
 	  exitm
 	endif
@@ -68,7 +68,7 @@ MOVSEG_		macro	segreg,val,temp,segname:vararg
 	    endif
 	  elseif ((.type val) eq 00100100b) or ((.type val) eq 0)
 		;; symbol is defined and expression is a constant value
-		errifb <temp> "Temporary register should be present!"
+;		errifb <temp> "Temporary register should be present!"
 		MOVREG_	<temp>,<val>
 		mov	segreg,temp
 	  else
@@ -83,7 +83,7 @@ endm
 
 ;------------------------------------------------------------------------
 
-MOVRR_		macro	r1,v1,r2,v2:vararg
+MOVRR_		macro	r1,v1,r2,v2 ; :vararg
 	ifdifi <v2>,<r1>
 		MOVREG_	<r1>,<v1>
 	  ifnb <v2>
@@ -101,7 +101,7 @@ MOVRR_		macro	r1,v1,r2,v2:vararg
 	endif
 endm
 
-MOVRO_		macro	r1,v,r2,off:vararg
+MOVRO_		macro	r1,v,r2,off ; :vararg
 	ifdifi <off>,<r1>
 		MOVREG_	<r1>,<v>
 	  ifnb <off>
@@ -119,7 +119,7 @@ MOVRO_		macro	r1,v,r2,off:vararg
 	endif
 endm
 
-MOVOO_		macro	r1,off1,r2,off2:vararg
+MOVOO_		macro	r1,off1,r2,off2 ; :vararg
 	ifdifi <off2>,<r1>
 		MOVOFF_	<r1>,<off1>
 	  ifnb <off2>
@@ -139,7 +139,7 @@ endm
 
 ;------------------------------------------------------------------------
 
-MOVRRR_		macro	r1,v1,r2,v2,r3,v3:vararg
+MOVRRR_		macro	r1,v1,r2,v2,r3,v3 ; :vararg
 	ifidni <v3>,<r1>
 	  ifdifi <v1>,<r2>
 		MOVREG_	<r2>,<v2>
@@ -168,7 +168,7 @@ MOVRRR_		macro	r1,v1,r2,v2,r3,v3:vararg
 	endif
 endm
 
-MOVRRO_		macro	r1,v1,r2,v2,r3,off:vararg
+MOVRRO_		macro	r1,v1,r2,v2,r3,off ; :vararg
 	ifidni <off>,<r1>
 		MOVRRR_	<r1>,<v1>,<r2>,<v2>,<r3>,<off>
 	elseifidni <off>,<r2>
@@ -179,7 +179,7 @@ MOVRRO_		macro	r1,v1,r2,v2,r3,off:vararg
 	endif
 endm
 
-MOVROO_		macro	r1,v1,r2,off2,r3,off3:vararg
+MOVROO_		macro	r1,v1,r2,off2,r3,off3 ; :vararg
 	ifidni <off3>,<r1>
 		MOVRRO_	<r1>,<v1>,<r3>,<off3>,<r2>,<off2>
 	elseifidni <off3>,<r2>
@@ -192,7 +192,7 @@ endm
 
 ;------------------------------------------------------------------------
 
-MOVREG2		macro	r,rhi,rlo,hi,lo:vararg
+MOVREG2		macro	r,rhi,rlo,hi,lo ; :vararg
 	ifidni <lo&-&hi>,<al-ah>
 		MOVREG_	<r>,ax
 	elseifidni <lo&-&hi>,<cl-ch>
@@ -209,7 +209,7 @@ MOVREG2		macro	r,rhi,rlo,hi,lo:vararg
 	endif
 endm
 
-MOVREGax_	macro	r:req,rhi:req,rlo:req,val,ahi:=<ah>,alo:vararg
+MOVREGax_	macro	r:req,rhi:req,rlo:req,val,ahi:=<ah>,alo ; :vararg
 	??ASLflag = 0
 	ifb <alo>
 		??ASLflag = 00001b
@@ -266,7 +266,7 @@ MOVREGax_	macro	r:req,rhi:req,rlo:req,val,ahi:=<ah>,alo:vararg
 	endif
 endm
 
-MOVOFFax_	macro	r:req,rhi:req,rlo:req,off,ahi:=<ah>,alo:vararg
+MOVOFFax_	macro	r:req,rhi:req,rlo:req,off,ahi:=<ah>,alo ; :vararg
 	??ASLflag = 0
 	ifb <alo>
 		??ASLflag = 00001b
@@ -325,7 +325,7 @@ endm
 
 ;------------------------------------------------------------------------
 
-TESTREG_	macro	reg:vararg
+TESTREG_	macro	reg ; :vararg
 	ifnb <reg>
 	??ASL instr <,ah,cl,ch,dl,dh,bl,bh,ax,cx,dx,bx,sp,bp,si,di,eax,ecx,edx,ebx,esp,ebp,esi,edi,>,<,&reg&,>
 	if ??ASL

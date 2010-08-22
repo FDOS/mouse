@@ -5,6 +5,7 @@
 ; Note: „” was used instead of Æä (ao-tilde)
 ;       this allows display both in codepage 437 and 850
 
+E_needvga       db 'VGA nÆo encontrado, use versÆo anterior caso precise de EGA RIL',nl,eos
 E_error		db nl,'Erro: op‡„o inv lida',eos
 E_option	db eos
 E_argument	db ' argumento',eos
@@ -33,13 +34,16 @@ S_wheel		db ' (wheel-mouse)'
 S_CRLF		db nl,eos
 
 Copyright	db nl,'CuteMouse v',CTMRELEASE,' [FreeDOS]',nl,eos
-Syntax		label
+Syntax		label byte
     db 0,'Op‡”es:',nl
     db '  /P	   - for‡a mouse modo PS/2',nl
     db '  /S[c[i]] - for‡a mouse modo serial em COM port c (1-4) com IRQ = i (1-7)',nl
 ;;+ db '  /S$a[,i] - for‡a mouse modo serial em I/O = a (em hexadecimal) com',nl
 ;;+ db '	     IRQ = i (1-7)',nl
-    db '  /Y	   - n„o instala modo Mouse Systems',nl
+    db '  /O       - detecta da roda do mouse PS/2 or USB pela BIOS (pode travar)',nl
+; 2008: made /Y (ignore MSys) the default and introduced /M (enable MSys)
+;   db '  /Y	   - do not try Mouse Systems mode for non-PnP devices',nl,nl
+    db '  /M       - tenta mouse *antigo* tipo Genius / Mouse System que nÆo ‚ PnP',nl,nl
     db '  /V	   - busca inreversa: procura PS/2 depois do mouse serial',nl
     db '  /3	   - for‡a modo 3-bot”es (s¢ para mouses Microsoft e PS/2)',nl
     db '  /R[h[v]] - resolu‡Æo horizontal/vertical (h,v=0-9; op‡„o R faltando, sem',nl
@@ -52,3 +56,4 @@ Syntax		label
     db '  /W	   - n„o permite carregar TSR na UMB',nl
     db '  /U	   - desinstala driver',nl
     db '  /?	   - mostra esta ajuda',eos
+

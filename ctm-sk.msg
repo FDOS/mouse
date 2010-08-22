@@ -4,6 +4,7 @@
 ;
 ; Note: this file should be used with codepage 852
 
+E_needvga       db 'No VGA? Use older CTMOUSE if you need EGA RIL support',nl,eos
 E_error		db nl,'Chyba: Nezn my ',eos
 E_option	db 'prep¡naŸ',eos
 E_argument	db 'argument prep¡naŸa',eos
@@ -32,13 +33,16 @@ S_wheel		db ' (podpora kolieska)'
 S_CRLF		db nl,eos
 
 Copyright	db nl,'CuteMouse v',CTMRELEASE,' [FreeDOS]',nl,eos
-Syntax		label
+Syntax		label byte
     db 0,'Mo§nosti:',nl
     db '  /P	   - vyn£ti PS/2 m¢d',nl
     db '  /S[c[i]] - vyn£ti s‚riovì m¢d na COM porte c (1-4) s IRQ i (1-7)',nl
 ;;+ db '  /S$a[,i] - vyn£ti s‚riovì m¢d na I/O adrese a (hexadecim lne Ÿ¡slo)',nl
 ;;+ db '	     s IRQ i (1-7)',nl
-    db '  /Y	   - zak §e Mouse Systems',nl
+    db '  /O       - enable PS2 and BIOS USB wheel detection (might hang)',nl
+; 2008: made /Y (ignore MSys) the default and introduced /M (enable MSys)
+;   db '  /Y	   - do not try Mouse Systems mode for non-PnP devices',nl,nl
+    db '  /M       - try *old* Mouse Systems / Genius for non-PnP mice',nl,nl
     db '  /V	   - opaŸn‚ h–adanie: PS/2 po s‚riovìch myçiach',nl
     db '  /3	   - vyn£ti 3-tlaŸ¡tkovì m¢d (pre Microsoft a PS/2 myçi)',nl
     db '  /R[h[v]] - horizont lne/vertik lne rozl¡çenie (h,v=0-9; chìbaj£ca vo–ba R,',nl

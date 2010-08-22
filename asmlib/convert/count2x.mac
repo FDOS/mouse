@@ -34,7 +34,7 @@
 ; Hint: AX may be immediately stored into memory to get 2-digit ASCII
 ;	string (with leading zero, if input value less than 10h).
 ;
-_byte_hex_AX	macro	val:=<al>,case,shift:vararg
+_byte_hex_AX	macro	val:=<al>,case,shift ; :vararg
 	ifnb <shift>
 	ifdifi <shift>,<4>
 	ifdifi <shift>,<cl>
@@ -56,7 +56,8 @@ _byte_hex_AX	macro	val:=<al>,case,shift:vararg
 		shr	ah,4
 	endif
 		_digit2ch 16,<case>
-		xchg	ah,al
+;		xchg	ah,al
+	xchg al,ah	; TASM and JWASM use opposite encodings
 		_digit2ch 16,<case>
 endm
 
@@ -79,7 +80,7 @@ endm
 ; Note:	all four digits generated from higher to lower (including all
 ;	leading zero).
 ;
-_word_hex	macro	val:=<ax>,code:rest
+_word_hex	macro	val:=<ax>,code ; :rest
 	local loop
 	ifidni <val>,<cx>
 		MOVREG_	ax,<val>

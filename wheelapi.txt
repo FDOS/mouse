@@ -1,4 +1,24 @@
+
 Wheel support in DOS real-mode mouse drivers
+
+List of DOS applications which use the wheel API:
+
+Thanks to Rugxulo and others for collecting this list :-)
+
+- GVFM                          (graphical file manager)
+- Mpxplay                       (.MP3, .OGG, etc. audio player)
+- Arachne/GPL                   (graphical web browser / email suite)
+- Star Commander                (file manager)
+- PDCurses 3.x                  (console library)
+- Necromancer's DOS Navigator   (file manager)
+- Fred                          (text editor using graphics mode)
+- Blocek                        (graphical Unicode text editor, image viewer)
+- Hammer of Thyrion             (DOS port of Hexen II game)
+- 4DOS                          (COMMAND.COM shell replacement)
+- Deskwork                      (graphical user interface, StarTrek style)
+
+---------------------------------------------------------------------
+
 API version 1.0
 
 Summary:

@@ -30,7 +30,7 @@
 ; Modf:	AH
 ; Call:	INT 21/02
 ;
-DOSWriteC	macro	char:vararg
+DOSWriteC	macro	char ; :vararg
 		MOVREG_	dl,<char>
 		mov	ah,2
 		int	21h		; write character to stdout
@@ -48,7 +48,7 @@ endm
 ; Modf:	AH
 ; Call:	INT 21/09
 ;
-DOSWriteS	macro	strseg,strsegname,stroff:vararg
+DOSWriteS	macro	strseg,strsegname,stroff ; :vararg
 		MOVOFF_	dx,<stroff>
 		MOVSEG_	ds,<strseg>,,<strsegname>
 		mov	ah,9

@@ -2,6 +2,7 @@
 ; Here are messages in German
 ; Translated by Frank PrÅfer <fp666@t-online.de>
 
+E_needvga       db 'Kein VGA? Verwende ggf. Ñltere CTMOUSE mit EGA RIL Funktion',nl,eos
 E_error		db nl,'FEHLER: ungÅltige',eos
 E_option	db ' Option!',eos
 E_argument	db 's Optionsargument!',eos
@@ -31,13 +32,16 @@ S_wheel		db ' (mit Rad)'
 S_CRLF		db nl,eos
 
 Copyright	db nl,'CuteMouse v',CTMRELEASE,' [FreeDOS]',nl,eos
-Syntax		label
+Syntax		label byte
     db 0,'Optionen:',nl
     db '  /P	   - PS/2-Mausmodus erzwingen',nl
     db '  /S[c[i]] - seriellen Mausmodus erzwingen an COM c (1...4) mit IRQ i (1...7)',nl
 ;;+ db '  /S$a[,i] - seriellen Mausmodus erzwingen an I/O-Adresse a (hexadezimal)',nl
 ;;+ db '	     mit IRQ i (1...7)',nl
-    db '  /Y	   - Mouse Systems Modus verbieten',nl
+    db '  /O       - verwende PS/2 / USB BIOS Mausrad Erkennung (experimentell)',nl
+; 2008: made /Y (ignore MSys) the default and introduced /M (enable MSys)
+;   db '  /Y	   - do not try Mouse Systems mode for non-PnP devices',nl,nl
+    db '  /M       - probiere *alten* Mouse Systems / Genius Modus falls keine PnP Maus',nl,nl
     db '  /V	   - Suche umkehren: PS/2 nach serieller Maus finden',nl
     db '  /3	   - 3-Tasten-Modus erzwingen (nur fÅr Microsoft- und PS/2-MÑuse)',nl
     db '  /R[h[v]] - horizontale/vertikale Auflîsung (h,v=0...9; fehlende Option R,',nl

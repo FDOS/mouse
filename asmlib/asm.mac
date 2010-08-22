@@ -24,23 +24,23 @@
 
 j		equ	jmp short
 
-saveFAR		macro	addr:req,segm:req,offs:rest
+saveFAR		macro	addr:req,segm:req,offs	; :rest
 		mov	word ptr addr[0],offs
 		mov	word ptr addr[2],segm
 endm
 
-MOVSEG		macro	segreg:req,val:req,temp,segname:rest
+MOVSEG		macro	segreg:req,val:req,temp,segname ; :rest
 		MOVSEG_	<segreg>,<val>,<temp>,<segname>
 endm
 
-POPSEG		macro	segreg:req,segname:rest
+POPSEG		macro	segreg:req,segname ; :rest
 		pop	segreg
 		assume	segreg:segname
 endm
 
 ;------------------------------------------------------------------------
 
-movadd		macro	dst:req,base,index:vararg
+movadd		macro	dst:req,base,index ; :vararg
 	ifb <index>
 		MOVREG_	<dst>,<base>		;; dst=base
 		exitm
@@ -120,7 +120,7 @@ movadd		macro	dst:req,base,index:vararg
 		add	dst,index
 endm
 
-movsub		macro	dst:req,base,index:vararg
+movsub		macro	dst:req,base,index ; :vararg
 	ifb <index>
 		MOVREG_	<dst>,<base>		;; dst=base
 		exitm
@@ -206,7 +206,7 @@ endm
 
 ;------------------------------------------------------------------------
 
-memcopy		macro	cnt:=<cx>,dstseg,dstsegname,dstoff,srcseg,srcsegname,srcoff:vararg
+memcopy		macro	cnt:=<cx>,dstseg,dstsegname,dstoff,srcseg,srcsegname,srcoff ; :vararg
 	if (.type cnt) ne 00100100b
 	  ;; symbol not defined or expression not a constant value
 		MOVROO_	cx,<cnt>,di,<dstoff>,si,<srcoff>
@@ -233,7 +233,7 @@ endm
 
 ;------------------------------------------------------------------------
 
-movidx		macro	reg:req,index:req,base,oldindex:vararg
+movidx		macro	reg:req,index:req,base,oldindex ; :vararg
 	ifb <oldindex>
 		movadd	<reg>,<base>,<index>
 	elseifb <base>
@@ -249,7 +249,7 @@ endm
 
 ;------------------------------------------------------------------------
 
-out_		macro	port:=<dx>,lo:=<al>,hi:vararg
+out_		macro	port:=<dx>,lo:=<al>,hi ; :vararg
 	if (.type port) eq 00100100b
 	;; symbol is defined and expression is a constant value
 	if port lt 100h
@@ -270,7 +270,7 @@ out_		macro	port:=<dx>,lo:=<al>,hi:vararg
 	endif
 endm
 
-outw		macro	port:=<dx>,val:vararg
+outw		macro	port:=<dx>,val ; :vararg
 	if (.type port) eq 00100100b
 	;; symbol is defined and expression is a constant value
 	if port lt 100h
@@ -283,7 +283,7 @@ outw		macro	port:=<dx>,val:vararg
 		out	dx,ax
 endm
 
-inb		macro	var,port:vararg
+inb		macro	var,port ; :vararg
 	ifnb <port>
 	if (.type port) eq 00100100b
 	;; symbol is defined and expression is a constant value
@@ -299,7 +299,7 @@ inb		macro	var,port:vararg
 		MOVREG_	<var>,al
 endm
 
-inw		macro	var,port:vararg
+inw		macro	var,port ; :vararg
 	ifnb <port>
 	if (.type port) eq 00100100b
 	;; symbol is defined and expression is a constant value

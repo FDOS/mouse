@@ -109,7 +109,7 @@ VIDEO_dynsavearea	dd ?	; ptr to Parameter Dynamic Save Area
 VIDEO_text_charset@	dd ?	; ptr to Text Character Set Override
 VIDEO_graph_charset@	dd ?	; ptr to Graphics Character Set Override
 VIDEO_savetbl2@		dd ?	; [VGA] ptr to Secondary Save Pointer Table
-ends
+VIDEOSAVETBL ends
 
 ; Video Parameter Table:
 ;	VIDEOPARAM 4 dup(?)	; modes 0-3 in 200-line CGA emulation mode
@@ -132,7 +132,7 @@ VPARAM_MISC	db ?		; value for Miscellaneous Output Reg (3C2h)
 VPARAM_CRTC	db 25 dup(?)	; values for CRTC Registers (3x4h)
 VPARAM_ATC	db 20 dup(?)	; values for Attribute Controller Regs (3C0h)
 VPARAM_GRC	db 9 dup(?)	; values for Graphics Controller Regs (3CEh)
-ends		; sizeof(VIDEOPARAM) == 64
+VIDEOPARAM ends		; sizeof(VIDEOPARAM) == 64
 
 
 ;========================================================================
@@ -159,7 +159,8 @@ VIDEO_mode	db ?		; 449: current video mode
 VIDEO_width	dw ?		; 44A: screen width in text columns
 VIDEO_pagesize	dw ?		; 44C: video page (regen buffer) size in bytes
 VIDEO_pageoff	dw ?		; 44E: active page offset in video segment
-CURSOR_pos	db 8 dup(?,?)	; 450: cursor column/row on each video page
+; CURSOR_pos	db 8 dup(?,?)	; 450: cursor column/row on each video page
+CURSOR_pos	db (8+8) dup (?)	; JWASM does not understand dup(?,?)
 CURSOR_shape	db ?,?		; 460: cursor end/start scan lines
 VIDEO_pageno	db ?		; 462: active page number
 CRTC_base	dw ?		; 463: base IO address of CRT controller (3x4h)
